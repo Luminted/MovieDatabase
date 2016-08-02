@@ -1,0 +1,51 @@
+CREATE TABLE "MOVIES" (
+    "M_ID" INTEGER not null primary key,
+    "TITLE" VARCHAR(30) not null,
+    "RELEASE" INTEGER not null,
+    "LEGAL" BOOLEAN not null
+);
+
+CREATE TABLE "RENTALS" (
+    "R_ID" INTEGER not null  primary key,
+    "M_ID" INTEGER not null,
+    FOREIGN KEY (M_ID) REFERENCES MOVIES (M_ID),
+    "NAME" VARCHAR(30) not null,
+    "START_DATE" DATE not null,
+    "END_DATE" DATE not null
+);
+
+CREATE TABLE "ACTORS" (
+    "A_ID" INTEGER not null primary key GENERATED ALWAYS AS IDENTITY
+        (START WITH 1, INCREMENT BY 1),
+    "NAME" VARCHAR(30) not null
+);
+
+CREATE TABLE "DIRECTORS" (
+    "D_ID" INTEGER not null primary key GENERATED ALWAYS AS IDENTITY
+        (START WITH 1, INCREMENT BY 1),
+    "NAME" VARCHAR (30) not null
+);
+
+CREATE TABLE "MOVIEDIRECTORS" (
+    D_ID int NOT NULL,
+    M_ID int NOT NULL,
+    CONSTRAINT PK_MOVIEDIRECTORS PRIMARY KEY
+    (
+        D_ID,
+        M_ID
+    ),
+    FOREIGN KEY (D_ID) REFERENCES DIRECTORS (D_ID),
+    FOREIGN KEY (M_ID) REFERENCES MOVIES (M_ID)
+);
+
+CREATE TABLE "MOVIEACTORS" (
+    A_ID int NOT NULL,
+    M_ID int NOT NULL,
+    CONSTRAINT PK_MOVIEACTORS PRIMARY KEY
+    (
+        A_ID,
+        M_ID
+    ),
+    FOREIGN KEY (A_ID) REFERENCES ACTORS (A_ID),
+    FOREIGN KEY (M_ID) REFERENCES MOVIES (M_ID)
+);
